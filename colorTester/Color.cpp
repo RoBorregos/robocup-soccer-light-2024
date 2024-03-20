@@ -73,7 +73,3 @@ double Color::recoveryAngle() {
   }
 }
 
-//getter recovery angle 
-int Color::getRecoveryAngle() {
-    return recoveryAngle();
-}

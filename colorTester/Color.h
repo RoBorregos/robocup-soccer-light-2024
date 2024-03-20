@@ -34,7 +34,6 @@
       void initiate();
       void calibrate();
       double recoveryAngle(); 
-      int recoveryAngle(); 
   };
 
 #endif

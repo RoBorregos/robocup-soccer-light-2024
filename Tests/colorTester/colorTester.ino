@@ -1,4 +1,4 @@
-#include "Color.h"
+/*#include "Color.h"
 
 Color colorSensor; 
 
@@ -19,3 +19,4 @@ void loop() {
 
   delay(1000);  
 }
+*/

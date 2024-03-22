@@ -1,4 +1,4 @@
-#include "Color.h"
+/*#include "Color.h"
 #include "BNO.h"
 #include "Motores.h"
 
@@ -25,4 +25,5 @@ void loop() {
 
   delay(100); 
 }
+*/
 

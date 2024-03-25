@@ -5,7 +5,7 @@ const int motor_1_PWM = 4;
 const int motor_1_dir1 = 23; 
 const int motor_1_dir2 = 22; 
 
-const int motor_2_PWM = 3;  
+const int motor_2_PWM = 5;  
 const int motor_2_dir1 = 24;  
 const int motor_2_dir2 = 25;  
 

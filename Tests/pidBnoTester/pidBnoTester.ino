@@ -57,10 +57,10 @@ void loop() {
 // function for calculating the error based on the current angle
 double calculateError(int angle, int set_point) {
   // get current time in milliseconds
-  unsigned long time = millis();
+  unsigned long time = millis(); 
   
   // time difference since last calculation
-  unsigned long delta_time = time - previous_time;
+  double delta_time = (time - previous_time)/1000;
   
   control_error = set_point - angle;
   double delta_error = (control_error - previous_error) / delta_time;

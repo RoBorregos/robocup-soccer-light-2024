@@ -1,4 +1,4 @@
-#include "Arduino.h"
+/*#include "Arduino.h"
 #include "Color.h"
 
 int Color::lectura(int ft, int placa) {  
@@ -230,13 +230,4 @@ double Color::checkForLineaPlaca(){
       }
       else { return -1; }
 
-    /*
-      180 placa de adelante
-      60 placa de izquierda
-      -60 placa de derecha
-      0 placas de atras
-      120 adelante y derecha
-      240 adelante e izquierda
-    */
-
-    }
+  */

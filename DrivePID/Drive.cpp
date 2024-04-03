@@ -76,37 +76,46 @@ void Drive::linealMovementError(int degree, int speed, int error, bool is_right)
   Serial.print("Motor B Speed: ");
   Serial.println(speedB);
   Serial.print("Motor C Speed: ");
-  Serial.println(speedC); 
+  Serial.println(speedC);  
+  
 
   int maxSpeed = max(speedA, max(speedB, speedC));
   if (maxSpeed > 255) {
-    speedA = map(speedA, 0, maxSpeed, 0, 255);
-    speedB = map(speedB, 0, maxSpeed, 0, 255);
-    speedC = map(speedC, 0, maxSpeed, 0, 255);
+    speedA = map(speedA, 0, maxSpeed, 0, 200);
+    speedB = map(speedB, 0, maxSpeed, 0, 200);
+    speedC = map(speedC, 0, maxSpeed, 0, 200);
   }
 
   analogWrite(motor_1.getMotorSpeed(), speedA);
   analogWrite(motor_2.getMotorSpeed(), speedB);
-  analogWrite(motor_3.getMotorSpeed(), speedC);
+  analogWrite(motor_3.getMotorSpeed(), speedC); 
 
- if (speedA >= 0) {
+  Serial.print("Motor A Speed: ");
+  Serial.println(speedA);
+  Serial.print("Motor B Speed: ");
+  Serial.println(speedB);
+  Serial.print("Motor C Speed: ");
+  Serial.println(speedC); 
+
+ if (m1 >= 0) {
     motor_1.motorFrontward();
   } else {
     motor_1.motorBackward();
   }
 
-  if (speedB >= 0) {
+  if (m2>= 0) {
     motor_2.motorFrontward();
   } else {
     motor_2.motorBackward();
   }
 
-  if (speedC >= 0) {
-    motor_3.motorFrontward();
+  if (m3 >= 0) {
+    motor_3.motorFrontward(); 
   } else {
     motor_3.motorBackward();
   }
-}
+} 
+
 
 // set speed for motors
 void Drive::setAllMotorSpeed(int all_speed) {

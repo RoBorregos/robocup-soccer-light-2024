@@ -11,6 +11,7 @@ PID pid(0.9, 0, 0.09);
 int angle_tester = 0;  
 int speed_tester = 150; 
 
+
 void setup (){ 
     Serial.begin(9600); 
     orientation_sensor.initialize(); 
@@ -24,8 +25,8 @@ void loop() {
     Serial.print(yaw); 
 
     double control = pid.calculateError(yaw, 0); 
-    robot_drive.linealMovementError(angle_tester, speed_tester, control, orientation_sensor.isRight()); 
-
-    delay(50); 
+    robot_drive.linealMovementError(angle_tester, speed_tester, control, orientation_sensor.isRight());   
+    delay(20);  
+  
 
 } 

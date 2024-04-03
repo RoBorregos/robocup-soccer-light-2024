@@ -69,6 +69,7 @@ void Drive::linealMovementError(int degree, int speed, int error, bool is_right)
   motor_2.setSpeed(speedB); 
   motor_3.setSpeed(speedC); 
 }
+  
 
 // set speed for motors
 void Drive::setAllMotorSpeed(int all_speed) {

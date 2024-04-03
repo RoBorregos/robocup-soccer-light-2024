@@ -21,5 +21,5 @@ void loop() {
   Serial.print("\tradio: ");
   Serial.println(strength);
 
-  delay(100); 
+  delay(50); 
 } 

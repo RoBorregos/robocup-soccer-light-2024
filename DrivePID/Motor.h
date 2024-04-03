@@ -13,9 +13,10 @@ class Motor {
   void stop();
   void motorFrontward();
   void motorBackward(); 
+  void setSpeed(int speed); 
   int getMotorSpeed();
   int getPin1();
-  int getPin2();
+  int getPin2(); 
 
  private:
   int speed_;

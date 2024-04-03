@@ -4,7 +4,7 @@
 #include "Drive.h"
 #include "Motor.h"
 
-Drive robot_drive(4, 23, 22, 5, 24, 25, 6, 26, 27);
+Drive robot_drive(6, 27, 26, 5, 25, 24, 4, 22, 23);
 
 Motor motor_1;
 Motor motor_2;
@@ -16,9 +16,9 @@ double previous_error = 0;
 unsigned long previous_time = 0;
 double sum_error = 0;
 double kP = 0.9;  // proportional gain
-double kI = 0.7;  // integral gain
-double kD = 0;    // derivative gain
-int max_error = 180;
+double kI = 0;  // integral gain
+double kD = 0.09;    // derivative gain
+int max_error = 35;
 
 void setup() {
   Serial.begin(9600); 
@@ -60,7 +60,7 @@ double calculateError(int angle, int set_point) {
   unsigned long time = millis(); 
   
   // time difference since last calculation
-  double delta_time = (time - previous_time)/1000;
+  double delta_time = (time - previous_time)/1000.0;
   
   control_error = set_point - angle;
   double delta_error = (control_error - previous_error) / delta_time;

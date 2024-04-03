@@ -31,19 +31,19 @@ void Drive::linealMovement(int degree, int speed) {
   analogWrite(motor_3.getMotorSpeed(), speedC);
 
   // rotate motors based on the angles
-  if (m1 >= 0) {
+  if (m1 <= 0) {
     motor_1.motorFrontward();
   } else {
     motor_1.motorBackward();
   }
 
-  if (m2 >= 0) {
+  if (m2 <= 0) {
     motor_2.motorFrontward();
   } else {
     motor_2.motorBackward();
   }
 
-  if (m3 >= 0) {
+  if (m3 <= 0) {
     motor_3.motorFrontward();
   } else {
     motor_3.motorBackward();
@@ -55,22 +55,17 @@ void Drive::linealMovement(int degree, int speed) {
 void Drive::linealMovementError(int degree, int speed, int error, bool is_right) {
   float m1 = sin(((60 - degree) * PI / 180));
   float m2 = sin(((180 - degree) * PI / 180));
-  float m3 = sin(((300 - degree) * PI / 180));
+  float m3 = sin(((300 - degree) * PI / 180)); 
 
-  int speedA = abs(int(m1 * speed));
-  int speedB = abs(int(m2 * speed));
-  int speedC = abs(int(m3 * speed));
+  int speedA = (m1*speed);
+  int speedB = (m2*speed);
+  int speedC = (m3*speed);
 
-  if (is_right) {
-    speedA += error;
-    speedB += error;
-    speedC += error;
-  } else {
-    speedA -= error;
-    speedB -= error;
-    speedC -= error;
-  }
+  speedA -= error;
+  speedB -= error;
+  speedC -= error;
 
+ /*
   Serial.print("Motor A Speed: ");
   Serial.println(speedA);
   Serial.print("Motor B Speed: ");
@@ -84,29 +79,34 @@ void Drive::linealMovementError(int degree, int speed, int error, bool is_right)
     speedB = map(speedB, 0, maxSpeed, 0, 255);
     speedC = map(speedC, 0, maxSpeed, 0, 255);
   }
+*/ 
 
-  analogWrite(motor_1.getMotorSpeed(), speedA);
-  analogWrite(motor_2.getMotorSpeed(), speedB);
-  analogWrite(motor_3.getMotorSpeed(), speedC);
+  int absSpeedA = abs(speedA);
+  int absSpeedB = abs(speedB);
+  int absSpeedC = abs(speedC);
 
- if (speedA >= 0) {
+  analogWrite(motor_1.getMotorSpeed(), absSpeedA);
+  analogWrite(motor_2.getMotorSpeed(), absSpeedB);
+  analogWrite(motor_3.getMotorSpeed(), absSpeedC);
+
+ if (speedA <= 0) {
     motor_1.motorFrontward();
   } else {
     motor_1.motorBackward();
   }
 
-  if (speedB >= 0) {
+  if (speedB <= 0) {
     motor_2.motorFrontward();
   } else {
     motor_2.motorBackward();
   }
 
-  if (speedC >= 0) {
+  if (speedC <= 0) {
     motor_3.motorFrontward();
   } else {
     motor_3.motorBackward();
   }
-}
+} 
 
 // set speed for motors
 void Drive::setAllMotorSpeed(int all_speed) {

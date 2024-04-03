@@ -31,19 +31,19 @@ void Drive::linealMovement(int degree, int speed) {
   analogWrite(motor_3.getMotorSpeed(), speedC);
 
   // rotate motors based on the angles
-  if (m1 >= 0) {
+  if (m1 <= 0) {
     motor_1.motorFrontward();
   } else {
     motor_1.motorBackward();
   }
 
-  if (m2 >= 0) {
+  if (m2 <= 0) {
     motor_2.motorFrontward();
   } else {
     motor_2.motorBackward();
   }
 
-  if (m3 >= 0) {
+  if (m3 <= 0) {
     motor_3.motorFrontward();
   } else {
     motor_3.motorBackward();
@@ -55,67 +55,21 @@ void Drive::linealMovement(int degree, int speed) {
 void Drive::linealMovementError(int degree, int speed, int error, bool is_right) {
   float m1 = sin(((60 - degree) * PI / 180));
   float m2 = sin(((180 - degree) * PI / 180));
-  float m3 = sin(((300 - degree) * PI / 180));
+  float m3 = sin(((300 - degree) * PI / 180)); 
 
-  int speedA = abs(int(m1 * speed));
-  int speedB = abs(int(m2 * speed));
-  int speedC = abs(int(m3 * speed));
+  int speedA = (m1*speed);
+  int speedB = (m2*speed);
+  int speedC = (m3*speed);
 
-  if (is_right) {
-    speedA += error;
-    speedB += error;
-    speedC += error;
-  } else {
-    speedA -= error;
-    speedB -= error;
-    speedC -= error;
-  }
+  speedA -= error;
+  speedB -= error;
+  speedC -= error; 
 
-  Serial.print("Motor A Speed: ");
-  Serial.println(speedA);
-  Serial.print("Motor B Speed: ");
-  Serial.println(speedB);
-  Serial.print("Motor C Speed: ");
-  Serial.println(speedC);  
+  motor_1.setSpeed(speedA); 
+  motor_2.setSpeed(speedB); 
+  motor_3.setSpeed(speedC); 
+}
   
-
-  int maxSpeed = max(speedA, max(speedB, speedC));
-  if (maxSpeed > 255) {
-    speedA = map(speedA, 0, maxSpeed, 0, 200);
-    speedB = map(speedB, 0, maxSpeed, 0, 200);
-    speedC = map(speedC, 0, maxSpeed, 0, 200);
-  }
-
-  analogWrite(motor_1.getMotorSpeed(), speedA);
-  analogWrite(motor_2.getMotorSpeed(), speedB);
-  analogWrite(motor_3.getMotorSpeed(), speedC); 
-
-  Serial.print("Motor A Speed: ");
-  Serial.println(speedA);
-  Serial.print("Motor B Speed: ");
-  Serial.println(speedB);
-  Serial.print("Motor C Speed: ");
-  Serial.println(speedC); 
-
- if (m1 >= 0) {
-    motor_1.motorFrontward();
-  } else {
-    motor_1.motorBackward();
-  }
-
-  if (m2>= 0) {
-    motor_2.motorFrontward();
-  } else {
-    motor_2.motorBackward();
-  }
-
-  if (m3 >= 0) {
-    motor_3.motorFrontward(); 
-  } else {
-    motor_3.motorBackward();
-  }
-} 
-
 
 // set speed for motors
 void Drive::setAllMotorSpeed(int all_speed) {

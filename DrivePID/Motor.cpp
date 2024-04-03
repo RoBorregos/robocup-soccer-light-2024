@@ -44,3 +44,15 @@ int Motor::getPin1() {
 int Motor::getPin2() {
   return pin2_;
 }
+
+void Motor::setSpeed(int speed){
+  int absSpeed = abs(speed); 
+  analogWrite(getMotorSpeed(), absSpeed); 
+
+  if (speed <= 0) { 
+      motorFrontward();
+  } else {
+    motorBackward();
+  }
+
+}

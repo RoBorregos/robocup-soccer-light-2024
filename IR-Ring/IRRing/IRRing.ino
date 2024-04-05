@@ -14,7 +14,8 @@ void loop() {
   ringIR.updateData(); 
 
   double angle = ringIR.getAngle(); 
-  double newAngle = (angle < 0 ? 360 + angle : angle);
+  double newAngle = (angle < 0 ? 360 + angle : angle); 
+  newAngle = 360 - newAngle; 
   double strength = ringIR.getStrength();
   
   Serial.print("angle: "); 

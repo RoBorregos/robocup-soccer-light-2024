@@ -17,13 +17,14 @@
 
       void initialize();
       void linealMovement(int degree, int speed);
-      void linealMovementError(int degree, int speed, int error, bool isRight); 
+      void linealMovementError(int degree, int speed, int error); 
       void setAllMotorSpeed(int all_speed);
       void driveOff();
       void driveFrontward();
       void driveBackward();
       void rotateH(); 
       void rotateAH();  
+      void circularMovement(int initialAngle, int speed, int error);
   };
 
 #endif

@@ -7,11 +7,11 @@ curved approach*/
 #include "PID.h" 
 #include "IR.h"
 
-Drive robot_drive(6, 27, 26, 5, 25, 24, 4, 22, 23); 
+Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 26, 27); 
 BNO orientation_sensor;  
 PID pid(0.9, 0, 0.09);   
 IR ringIR;
-int speed_tester = 170;   
+int speed_tester = 120;   
 unsigned long previous_time = 0;  
 int kFrequency = 51; 
 double ballDistance = 0; 
@@ -62,11 +62,14 @@ void loop() {
 }  
 
 void searchBall(int ball_angle, int ball_distance, int speed, int error) {
-    if (ball_distance > 65) {
-        robot_drive.linealMovementError(ball_angle, speed, error); 
+    /*if (ball_distance < 65) {
+        robot_drive.linealMovementError(ball_angle, speed, error);  
+        Serial.print("ball far");
     } else {
-        robot_drive.circularMovement(ball_angle, speed, error); 
-    }    
+        robot_drive.circularMovement(ball_angle, speed, error);  
+        Serial.print("ball close"); 
+    } */
+    robot_drive.linealMovementError(ball_angle, speed, error);  
 } 
 
 

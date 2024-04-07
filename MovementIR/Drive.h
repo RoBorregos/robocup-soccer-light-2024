@@ -24,7 +24,7 @@
       void driveBackward();
       void rotateH(); 
       void rotateAH();   
-      void circularMovement(int initialAngle, int speed, int error);
+      void circularMovement(int ball_angle, int speed, int error);
   };
 
 #endif

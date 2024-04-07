@@ -23,7 +23,8 @@
       void driveFrontward();
       void driveBackward();
       void rotateH(); 
-      void rotateAH();  
+      void rotateAH();   
+      void circularMovement(int initialAngle, int speed, int error);
   };
 
 #endif

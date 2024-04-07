@@ -68,6 +68,35 @@ void Drive::linealMovementError(int degree, int speed, int error) {
   motor_1.setSpeed(speedA); 
   motor_2.setSpeed(speedB); 
   motor_3.setSpeed(speedC); 
+} 
+
+void Drive::circularMovement(int initialAngle, int speed, int error) {
+    
+    //move to zero angle if ball is in zero 
+    if(initialAngle == 0) {
+        linealMovement(0, speed); 
+        return; 
+    }
+
+    const int maxSize = 4; 
+    int angles[maxSize]; 
+    int count = 0; 
+
+    // fill the array based on initialAngle
+    if(initialAngle == 60) { angles[0] = 120; angles[1] = 0; count = 2; }
+    else if(initialAngle == 120) { angles[0] = 180; angles[1] = 120; angles[2] = 0; count = 3; }
+    else if(initialAngle == 180) { angles[0] = 120; angles[1] = 180; angles[2] = 240; angles[3] = 0; count = 4; }
+    else if(initialAngle == 240) { angles[0] = 180; angles[1] = 240; angles[2] = 0; count = 3; }
+    else if(initialAngle == 300) { angles[0] = 240; angles[1] = 0; count = 2; }
+    else return; 
+
+    // loop through the angles array up to count
+    for(int i = 0; i < count; i++) {
+        int angle = angles[i];
+        // djust the robot direction for circular movement
+        linealMovementError(angle, speed, error);
+        delay(700); 
+    }
 }
   
 

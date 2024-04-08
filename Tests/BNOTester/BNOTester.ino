@@ -6,7 +6,7 @@
 // initialize BNO sensor
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28, &Wire);
 unsigned long previous_millis = 0;  
-const long interval = 1000;       
+const long interval = 100;       
 
 void setup() {
   Serial.begin(9600);
@@ -16,7 +16,7 @@ void setup() {
     Serial.print("No BNO055 detected");
     while (1); 
   }
-  delay(1000);
+  delay(100);
 
   // use external crystal for better accuracy
   bno.setExtCrystalUse(true);

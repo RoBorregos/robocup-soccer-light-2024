@@ -13,7 +13,7 @@ PID pid(0.9, 0, 0.09);
 IR ringIR;
 int speed_tester = 120;   
 unsigned long previous_time = 0;  
-int kFrequency = 51; 
+int kFrequency = 50; 
 double ballDistance = 0; 
 double ballAngle = 0; 
 
@@ -62,14 +62,12 @@ void loop() {
 }  
 
 void searchBall(int ball_angle, int ball_distance, int speed, int error) {
-    /*if (ball_distance < 65) {
-        robot_drive.linealMovementError(ball_angle, speed, error);  
-        Serial.print("ball far");
+    if (ball_angle >= 350 && ball_angle <= 360) {
+        robot_drive.linealMovementError(0, speed, error);  
     } else {
-        robot_drive.circularMovement(ball_angle, speed, error);  
-        Serial.print("ball close"); 
-    } */
-    robot_drive.linealMovementError(ball_angle, speed, error);  
+        robot_drive.linealMovementError(ball_angle, speed, error);  
+    } 
+
 } 
 
 

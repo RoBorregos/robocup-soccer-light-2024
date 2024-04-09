@@ -43,27 +43,12 @@ double IR::getAngle() {
 double IR::getStrength() {
   return filterStr.GetLowPass();
 }
+   
 
-double IR::calculateMovAngle (double ball_angle, double ball_distance) {  
-  //do something if ball distance is less or equal than offset 
-  //the offset is where the robot should start turning around the ball  
-  int offset = 40; //calibrate offset   
-  double target_angle = 0;    
-  // 0
-  if (ball_angle >= 20 && ball_angle <= 50) { // 60
-    target_angle = 120;  
-  } else if (ball_angle > 50 && ball_angle <= 138) { //120
-    target_angle = 180; 
-  } else if (ball_angle > 138 && ball_angle <= 190) { //180
-    target_angle = 120;
-  } else if (ball_angle > 190 && ball_angle <= 230) { //240
-    target_angle = 180; 
-  } else if (ball_angle > 230 && ball_angle <= 300)  { //300
-    target_angle = 240;   
-  } else {//0 
-    target_angle = 0; 
-  }
-
-  return target_angle; 
-}     
-
+double IR::mapAngleWithOffset(double angle) {
+    angle += 7;
+    if (angle >= 360) {
+        angle -= 360;
+    }
+    return angle;
+}

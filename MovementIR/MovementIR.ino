@@ -17,15 +17,6 @@ int kFrequency = 100;
 double ballDistance = 0; 
 double ballAngle = 0;  
 
-double mapAngleWithOffset(double angle) {
-    angle += 7; 
-    if (angle >= 360) {
-        angle -= 360; 
-    }
-    return angle;
-}
-
-
 void setup (){ 
     Serial.begin(9600);  
     Serial3.begin(115200);
@@ -46,10 +37,8 @@ void loop() {
     
     ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
     ballAngle = 360 - ballAngle;  
-    ballAngle = mapAngleWithOffset(ballAngle);
+    ballAngle = ringIR.mapAngleWithOffset(ballAngle);
 
-    //Serial.print("ball angle:  "); 
-    //Serial.print(ballAngle);
     Serial.print("\tball distance: "); 
     Serial.println(ballDistance);   
 

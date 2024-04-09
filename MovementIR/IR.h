@@ -17,7 +17,7 @@ class IR {
     void setOffset(double off_set);
     double getAngle(); 
     double getStrength();   
-    double calculateMovAngle(double ball_angle, double ball_distance); 
+    double mapAngleWithOffset(double angle);
 };
 
 #endif

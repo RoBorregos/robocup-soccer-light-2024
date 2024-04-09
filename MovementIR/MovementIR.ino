@@ -17,11 +17,10 @@ int kFrequency = 100;
 double ballDistance = 0; 
 double ballAngle = 0;  
 
-// Function to map the angle with offset
 double mapAngleWithOffset(double angle) {
-    angle += 7; // Add a 20-degree offset
+    angle += 7; 
     if (angle >= 360) {
-        angle -= 360; // Wrap the angle back to the range of 0-359 degrees
+        angle -= 360; 
     }
     return angle;
 }
@@ -76,9 +75,9 @@ void searchBall(int ball_angle, int ball_distance, int speed, int error) {
         robot_drive.linealMovementError(0, 220, error);  
     } else { 
         if (ball_angle > 10 && ball_angle <= 175) {
-            ball_angle += 20;      
+            ball_angle += 25;      
         } else if (ball_angle >= 185 && ball_angle < 355) {
-            ball_angle -= 20;
+            ball_angle -= 25;
         }     
         Serial.print("ball angle:  "); 
         Serial.print(ball_angle);

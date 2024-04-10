@@ -16,15 +16,13 @@
              int m3_speed, int m3_p1, int m3_p2);
 
       void initialize();
-      void linealMovement(int degree, int speed);
       void linealMovementError(int degree, int speed, int error); 
       void setAllMotorSpeed(int all_speed);
       void driveOff();
       void driveFrontward();
       void driveBackward();
       void rotateH(); 
-      void rotateAH();   
-      void circularMovement(int ball_angle, int speed, int error);
+      void rotateAH();  
   };
 
 #endif

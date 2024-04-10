@@ -16,41 +16,6 @@ void Drive::initialize() {
   motor_3.startMotor();
 }
 
-// kinematic equations for robot movement
-void Drive::linealMovement(int degree, int speed) {
-  float m1 = sin(((60 - degree) * PI / 180));
-  float m2 = sin(((180 - degree) * PI / 180));
-  float m3 = sin(((300 - degree) * PI / 180));
-  int speedA = abs(int(m1 * speed));
-  int speedB = abs(int(m2 * speed));
-  int speedC = abs(int(m3 * speed));
-
-  // set motor speeds
-  analogWrite(motor_1.getMotorSpeed(), speedA);
-  analogWrite(motor_2.getMotorSpeed(), speedB);
-  analogWrite(motor_3.getMotorSpeed(), speedC);
-
-  // rotate motors based on the angles
-  if (m1 <= 0) {
-    motor_1.motorFrontward();
-  } else {
-    motor_1.motorBackward();
-  }
-
-  if (m2 <= 0) {
-    motor_2.motorFrontward();
-  } else {
-    motor_2.motorBackward();
-  }
-
-  if (m3 <= 0) {
-    motor_3.motorFrontward();
-  } else {
-    motor_3.motorBackward();
-  }
-
-}
-
 // kinematic equations for lineal movement with error 
 void Drive::linealMovementError(int degree, int speed, int error) {
   float m1 = sin(((60 - degree) * PI / 180));
@@ -69,40 +34,6 @@ void Drive::linealMovementError(int degree, int speed, int error) {
   motor_2.setSpeed(speedB); 
   motor_3.setSpeed(speedC); 
 } 
-
-void Drive::circularMovement(int ball_angle, int speed, int error) {
-
-    const int maxSize = 4; 
-    int angles[maxSize]; 
-    int count = 0; 
-
-    // fill the array based on initialAngle
-    if (ball_angle >= 20 && ball_angle <= 50) { // 60
-        angles[0] = 120; angles[1] = 0; count = 2;
-    }
-    else if (ball_angle > 50 && ball_angle <= 138) { // 120
-        angles[0] = 180; angles[1] = 120; angles[2] = 0; count = 3;
-    }
-    else if (ball_angle > 138 && ball_angle <= 190) { // 180
-        angles[0] = 120; angles[1] = 180; angles[2] = 240; angles[3] = 0; count = 4;
-    }
-    else if (ball_angle > 190 && ball_angle <= 230) { //  240
-        angles[0] = 180; angles[1] = 240; angles[2] = 0; count = 3;
-    }
-    else if (ball_angle > 230 && ball_angle <= 300) { //  300
-        angles[0] = 240; angles[1] = 0; count = 2;
-    } else {
-      linealMovement(0, speed); 
-    }
-
-    // loop through the angles array up to count
-    for(int i = 0; i < count; i++) {
-        int angle = angles[i];
-        // djust the robot direction for circular movement
-        linealMovementError(angle, speed, error);
-        delay(500); 
-    }
-}
   
 
 // set speed for motors

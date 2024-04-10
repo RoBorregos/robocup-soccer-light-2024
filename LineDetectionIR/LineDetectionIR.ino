@@ -6,11 +6,13 @@ curved approach*/
 #include "Drive.h" 
 #include "PID.h" 
 #include "IR.h"
+#include "Color.h"
 
 Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 26, 27); 
 BNO orientation_sensor;  
 PID pid(0.9, 0, 0.09);   
-IR ringIR;
+IR ringIR; 
+Color colorSensor;
 int speed_tester = 120;   
 unsigned long previous_time = 0;  
 int kFrequency = 50; 
@@ -21,40 +23,48 @@ void setup (){
     Serial.begin(9600);  
     Serial3.begin(115200);
     unsigned long currentTime = millis();
+    //BNO
     orientation_sensor.initialize(); 
-    robot_drive.initialize();
+    //MOTORS
+    robot_drive.initialize(); 
+    //IR RING
     ringIR.initiate(&currentTime);
     ringIR.setOffset(0.0); 
+    //COLOR SENSORS 
+    colorSensor.initiate();  
 }
 
 void loop() {   
   unsigned long time = millis(); 
-  ringIR.updateData();  
-  ballDistance = ringIR.getStrength();  
-  ballAngle = ringIR.getAngle();
-  if ((time - previous_time) > kFrequency) {
-    orientation_sensor.readValues();  
-    
-    ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
-    ballAngle = 360 - ballAngle;  
-    ballAngle = ringIR.mapAngleWithOffset(ballAngle);
+  if ((time - previous_time) > kFrequency) {  
+    //IR RING
+    ringIR.updateData();  
+    ballDistance = ringIR.getStrength();  
+    ballAngle = ringIR.getAngle(); 
+    //COLOR SENSOR
+    colorSensor.calculateDirection();
+    int angleLine = colorSensor.getDirection();
+    //BNO
+    orientation_sensor.readValues(); 
+    double yaw = orientation_sensor.getYaw(); 
+    double control = pid.calculateError(yaw, 0);
 
-    Serial.print("\tball distance: "); 
-    Serial.println(ballDistance);   
+    if (angleLine != -1) {
+        // detected white line, move in opposite direction
+        robot_drive.linealMovementError(angleLine, 200, control); 
+        delay(50);
+    } else { 
+        ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
+        ballAngle = 360 - ballAngle;  
+        ballAngle = ringIR.mapAngleWithOffset(ballAngle);  
 
-    if (ballDistance != 0) { 
-      
-      Serial.print("yaw: ");  
-      double yaw = orientation_sensor.getYaw();
-      //Serial.print(yaw); 
-
-      double control = pid.calculateError(yaw, 0);  
-      //this function will be used depending if the distance given by the IR Ring works well
-      searchBallWithDistance(ballAngle, ballDistance, speed_tester, control); 
-
-    } else {
-      Serial.print("no ball detected"); 
-      robot_drive.driveOff();  
+        if (ballDistance != 0) { 
+          //this function will be used depending if the distance given by the IR Ring works well
+          searchBallWithDistance(ballAngle, ballDistance, speed_tester, control); 
+        } else {
+          Serial.print("no ball detected"); 
+          robot_drive.driveOff();  
+        }
     }
       previous_time = time; 
   }  
@@ -91,7 +101,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed, 
             robot_drive.linealMovementError(ball_angle, speed, error);
         }
     }
-    else if (ball_distance < 60) {
+    else if (ball_distance < 50) {
         if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
             robot_drive.linealMovementError(0, 220, error);
         } else {
@@ -104,5 +114,3 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed, 
         }
     }
 }
-
-

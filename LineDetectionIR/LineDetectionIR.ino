@@ -101,7 +101,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed, 
             robot_drive.linealMovementError(ball_angle, speed, error);
         }
     }
-    else if (ball_distance < 50) {
+    else if (ball_distance < 60) {
         if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
             robot_drive.linealMovementError(0, 220, error);
         } else {

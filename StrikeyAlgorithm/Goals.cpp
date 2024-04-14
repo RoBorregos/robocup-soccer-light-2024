@@ -2,51 +2,44 @@
 #include "Goals.h"
 
 Goals::Goals() {
+
 }
 
-void Goals::updateData(String str) {
-  int arr[4];
-    String data = "";
-    int index = 0;
+void Goals::initiate() {
+    pixy.init();
+}
 
-    for (int i = 2; i < str.length() && index < 4; i++) {
-      if (!(str[i] == ',')) {
-        data += str[i];
-      } else if (str[i] == ',' || i == str.length() - 1) {
-        arr[index++] = data.toInt();
-        data = "";
-      }
+void Goals::updateData() {
+    pixy.ccc.getBlocks();  
+    if (pixy.ccc.numBlocks) {
+        x = pixy.ccc.blocks[0].m_x;
+        y = pixy.ccc.blocks[0].m_y;
+        width = pixy.ccc.blocks[0].m_width;
+        height = pixy.ccc.blocks[0].m_height;
+        color = pixy.ccc.blocks[0].m_signature;
     }
-
-    x = arr[0];
-    y = arr[1];
-    width = arr[2];
-    height = arr[3];
-    area = width * height;
-
 }
 
-String Goals::getTag() {
-  return tag;
+bool Goals::detected() {
+    return pixy.ccc.numBlocks > 0;
 }
 
-int Goals::getY() {
-  return y;
+uint16_t Goals::getX() {
+    return x;
 }
 
-int Goals::getX() {
-  return x;
+uint16_t Goals::getY() {
+    return y;
 }
 
-
-int Goals::getWidth() {
-  return width;
+uint16_t Goals::getWidth() {
+    return width;
 }
 
-int Goals::getHeight() {
-  return height;
-} 
+uint16_t Goals::getHeight() {
+    return height;
+}
 
-int Goals::getArea(){
-    return area;
+uint8_t Goals::getColor() {
+    return color;
 }

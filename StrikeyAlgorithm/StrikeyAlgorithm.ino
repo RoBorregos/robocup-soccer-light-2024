@@ -12,7 +12,7 @@ State = line */
 /*PENDING CALIBRATIONS OF: 
 ballDetector: ir sensor in the front 
 ballAngle for checking the posession 
-calibration of values for open mv x, y, width, height
+calibration of values for pixy x, y, width, height
 */
 
 //Libs for Robot Functioning 
@@ -42,8 +42,9 @@ enum States {
     searchBall
 }; 
 
+
 enum Sides { 
-    yellow = 0; 
+    yellow = 0;  // why do they have values? 
     blue = 1; 
 };
 
@@ -64,10 +65,41 @@ void setup() {
 }
 
 void loop() {
-    current_time = millis();    
+    current_time = millis();   
 
-    // Algorithm for Demo 11 April :) 
+    // Algorithm for TMR
+   
+    // Initial state 
+    state = line; 
 
+    // Verify if robot is in line  
+    if (state == line) {
+        state = (inline()) ? lineDetected : hasBall; 
+    } 
+
+    if (state == lineDetected) {
+        exitLine(); 
+    }
+
+    // Check if robot has ball  
+    if (state == hasBall) {
+        ring_IR.updateData();    
+        // here the angle of the ball is taken raw, with no modifications
+        state = (abs(ring_IR.getAngle() > 15)) ? searchGoal : searchBall;
+    }
+    
+    // Search ball 
+    if (state == searchBall) {   
+        searchBallWithDistance(); 
+    }
+
+    // Go towards goal with ball 
+    if (state == searchGoal) {
+        approachGoal(); 
+    } 
+
+    
+    /*
     // Initial State
     state = line;  
 
@@ -85,42 +117,7 @@ void loop() {
     if (state == searchBall) {
         ring_IR.updateData();    
         searchBallWithDistance(); 
-    } 
-
-    // Adjusting to Goal (maybe)
-    
-    // Algorithm for TMR
-   
-    // Initial state 
-    /*
-    state = line; 
-
-    // Verify if robot is in line  
-    if (state == line) {
-        state = (inline()) ? lineDetected : hasBall; 
-    } 
-
-    if (state == lineDetected) {
-        exitLine(); 
-    }
-
-    // Check if robot has ball  
-    if (state == hasBall) {
-        ring_IR.updateData();    
-        // here the angle of the ball is taken raw, with no modifications
-        state = (ballDetector() >= 5 && abs(ring_IR.getAngle() > 15)) ? searchGoal : searchBall;
-    }
-    
-    // Search ball 
-    if (state == searchBall) {   
-        searchBallWithDistance(); 
-    }
-
-    // Go towards goal with ball 
-    if (state == searchGoal) {
-        approachGoal(); 
-    } 
-
+    }  
     */
  
 }

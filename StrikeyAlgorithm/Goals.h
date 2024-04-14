@@ -3,24 +3,21 @@
 
 class Goals {
   private:
-    String tag = ""; 
-    int x = -1;
-    int y = -1;
-    int width = -1;
-    int height = -1;
-    int area = 0;
+    Pixy2 pixy;
+    uint16_t x, y, width, height;
+    uint8_t color; 
 
-    public:
+  public:
 
-    Goals();
-    void updateData(String str);
-    int getX();
-    int getY();
-    String getTag();
-    int getArea();
-    int getWidth();
-    int getHeight();
-    
+    Goals(); 
+    void initiate(); 
+    void updateData(); 
+    bool detected(); 
+    uint16_t getX();
+    uint16_t getY();
+    uint16_t getWidth();
+    uint16_t getHeight(); 
+    uint8_t getColor(); 
 };
 
 #endif

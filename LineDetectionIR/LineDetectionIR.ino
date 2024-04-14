@@ -40,7 +40,7 @@ void loop() {
     //IR RING
     ringIR.updateData();  
     ballDistance = ringIR.getStrength();  
-    ballAngle = ringIR.getAngle(); 
+    ballAngle = ringIR.getAngle();  
     //COLOR SENSOR
     colorSensor.calculateDirection();
     int angleLine = colorSensor.getDirection();
@@ -51,7 +51,7 @@ void loop() {
 
     if (angleLine != -1) {
         // detected white line, move in opposite direction
-        robot_drive.linealMovementError(angleLine, 200, control); 
+        //robot_drive.linealMovementError(angleLine, 200, control); 
         delay(50);
     } else { 
         ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
@@ -60,7 +60,7 @@ void loop() {
 
         if (ballDistance != 0) { 
           //this function will be used depending if the distance given by the IR Ring works well
-          searchBallWithDistance(ballAngle, ballDistance, speed_tester, control); 
+          //searchBallWithDistance(ballAngle, ballDistance, speed_tester, control); 
         } else {
           Serial.print("no ball detected"); 
           robot_drive.driveOff();  

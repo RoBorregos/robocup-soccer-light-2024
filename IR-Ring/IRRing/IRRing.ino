@@ -4,7 +4,7 @@
 IR ringIR;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   unsigned long currentTime = millis();
   ringIR.initiate(&currentTime);
   ringIR.setOffset(0.0);

@@ -28,8 +28,9 @@ void Motor::motorBackward() {
 }
 
 void Motor::stop() {
-  digitalWrite(pin1_, LOW);
-  digitalWrite(pin2_, LOW);
+  digitalWrite(pin1_, HIGH);
+  digitalWrite(pin2_, HIGH); 
+  analogWrite(speed_, 255); 
 }
 
 // getters

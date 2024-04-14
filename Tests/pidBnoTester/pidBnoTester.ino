@@ -4,7 +4,7 @@
 #include "Drive.h"
 #include "Motor.h"
 
-Drive robot_drive(6, 27, 26, 5, 25, 24, 4, 22, 23);
+Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26);
 
 Motor motor_1;
 Motor motor_2;

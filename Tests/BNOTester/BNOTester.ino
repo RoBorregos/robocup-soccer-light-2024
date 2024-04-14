@@ -6,7 +6,7 @@
 // initialize BNO sensor
 Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28, &Wire);
 unsigned long previous_millis = 0;  
-const long interval = 1000;       
+const long interval = 100;       
 
 void setup() {
   Serial.begin(9600);

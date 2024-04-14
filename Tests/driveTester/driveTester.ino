@@ -6,15 +6,15 @@ const int motor_1_dir1 = 23;
 const int motor_1_dir2 = 22; 
 
 const int motor_2_PWM = 5;  
-const int motor_2_dir1 = 24;  
-const int motor_2_dir2 = 25;  
+const int motor_2_dir1 = 25;  
+const int motor_2_dir2 = 24;  
 
 const int motor_3_PWM = 6; 
-const int motor_3_dir1 = 26;  
-const int motor_3_dir2 = 27;  
+const int motor_3_dir1 = 27;  
+const int motor_3_dir2 = 26;  
 
 // speed for testing and angle
-const int kSpeed = 50;
+const int kSpeed = 80;
 
 void setup() {
   Serial.begin(9600);
@@ -35,20 +35,20 @@ void setup() {
 
 void loop() {
   //tests for motor 1
-  digitalWrite(motor_1_dir1, HIGH);
-  digitalWrite(motor_1_dir2, LOW);
+  digitalWrite(motor_1_dir1, LOW);
+  digitalWrite(motor_1_dir2, HIGH);
   analogWrite(motor_1_PWM, kSpeed); 
   delay(2000); 
 
   //tests for motor 2
-  digitalWrite(motor_2_dir1, HIGH);
-  digitalWrite(motor_2_dir2, LOW);
+  digitalWrite(motor_2_dir1, LOW);
+  digitalWrite(motor_2_dir2, HIGH);
   analogWrite(motor_2_PWM, kSpeed); 
   delay(2000); 
 
   //tests for motor 3
-  digitalWrite(motor_3_dir1, HIGH);
-  digitalWrite(motor_3_dir2, LOW);
+  digitalWrite(motor_3_dir1, LOW);
+  digitalWrite(motor_3_dir2, HIGH);
   analogWrite(motor_3_PWM, kSpeed); 
   delay(2000); 
 

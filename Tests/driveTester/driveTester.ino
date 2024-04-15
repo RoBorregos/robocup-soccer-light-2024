@@ -10,11 +10,11 @@ const int motor_2_dir1 = 24;
 const int motor_2_dir2 = 25;  
 
 const int motor_3_PWM = 6; 
-const int motor_3_dir1 = 26;  
-const int motor_3_dir2 = 27;  
+const int motor_3_dir1 = 27;  
+const int motor_3_dir2 = 26;  
 
 // speed for testing and angle
-const int kSpeed = 50;
+const int kSpeed = 100;
 
 void setup() {
   Serial.begin(9600);

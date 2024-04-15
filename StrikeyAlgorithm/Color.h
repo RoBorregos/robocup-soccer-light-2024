@@ -4,32 +4,26 @@
   class Color {
   
     private:
-      // First PCB (left)
-      const int s0_1 = 32; 
-      const int s1_1 = 33; 
-      const int s2_1 = 34;
-      const int muxSignal_1 = A12; 
+      const int s0 = 36; 
+      const int s1 = 37; 
+      const int s2 = 38;
+      const int sig = A8;  
 
-      // Second PCB (right)
-      const int s0_2 = 36; 
-      const int s1_2 = 37;   
-      const int s2_2 = 38;  
-      const int muxSignal_1 = A8; 
-
-      // Pins for sensors front 
-      int directPins[4] = {A0, A1, A2, A3};    
-
-      // These arrays need to be changed 
-      int lineSensorThreshold[8] = {700, 700, 700, 300, 600, 400, 400, 600};  
-      int sensorAngles[8] = {300, 285, 270, 255, 240, 225, 210, 195};  
+      int directPins[8] = {A0, A1, A4, A5, A13, A14, A9, A10}; 
+ 
+      int thresholdMux[6] = {500, 100, 500, 100, 500, 500};   
+      int thresholdDirect[8] = {700, 700, 700, 40, 200, 250, 250, 210}; 
+      int anglesMux[6] = {165, 180, 150, 105, 75, 90};   
+      int anglesDirect[8] = {285, 240, 180, 180, 0, 0, 0, 0};   
+ 
       int lastDirection = -1; 
     
     public:
   
       Color(); 
       void initiate();
-      void selectChannel(int chnl, int mux);  
-      void readSensors();  
+      void selectChannel(int chnl);  
+      void muxSensor();  
       void calculateDirection();  
       int getDirection(); 
     

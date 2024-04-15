@@ -4,13 +4,18 @@
   class Color {
   
     private:
-      const int s0 = 32; 
-      const int s1 = 33; 
-      const int s2 = 34;
-      //const int sig = A15; 
+      const int s0 = 36; 
+      const int s1 = 37; 
+      const int s2 = 38;
+      const int sig = A8;  
+
+      int directPins[8] = {A0, A1, A4, A5, A13, A14, A9, A10}; 
  
-      int lineSensorThreshold[8] = {700, 700, 700, 300, 600, 400, 400, 600};   
-      int sensorAngles[8] = {300, 285, 270, 255, 240, 225, 210, 195};  
+      int thresholdMux[6] = {500, 100, 500, 100, 500, 500};   
+      int thresholdDirect[8] = {700, 700, 700, 40, 200, 250, 250, 210}; 
+      int anglesMux[6] = {165, 180, 150, 105, 75, 90};   
+      int anglesDirect[8] = {285, 240, 180, 180, 0, 0, 0, 0};   
+ 
       int lastDirection = -1; 
     
     public:

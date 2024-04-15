@@ -1,6 +1,7 @@
 //function of ball_distcance working 
 void searchBallWithDistance() { 
-    // Get ball angle and modifications
+    // Get ball angle and modifications 
+    ring_IR.updateData();  
     int ball_angle = ring_IR.getAngle();  
     ball_angle = (ball_angle < 0 ? 360 + ball_angle : ball_angle);   
     ball_angle = 360 - ball_angle;  
@@ -62,13 +63,16 @@ void approachGoal() {
     updateGoals();  
 
     // get x, large, width from goals   
-    int goalX = (attack == yellow) ? yellowGoal.getX() : blueGoal.getX();
-    int height = (attack == yellow) ? yellowGoal.getHeight() : blueGoal.getHeight();
-    int width = (attack == yellow) ? yellowGoal.getWidth() : blueGoal.getWidth(); 
+    int goalY = (attack == yellow) ? yellowGoal.getX() : blueGoal.getX();
     
     // get PID error 
     int error = calculateError();  
-
+    // here the robot is centered , check for goal AND line detection, shouldnt be because exit line comes first 
+    if (goalY < 110 &&) {
+        robot_drive.linealMovementError(0, 220, control); 
+    } else {
+        robot_drive.linealMovementError(180, 180, control);
+    }
     // do something if goal its not seen 
 
     // if its seen, do something for going left, right 

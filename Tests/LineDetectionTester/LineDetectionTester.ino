@@ -41,7 +41,7 @@ void readSensors() {
        if(i == 2 || i == 3){}
     else {
       selectChannel(i);
-      int value = analogRead(sig); // Leer valor analógico 
+      int value = analogRead(sig);  
       Serial.print(value); 
       Serial.print(" ");
     }
@@ -50,8 +50,7 @@ void readSensors() {
   // Read from direct sensors
   for (int i = 0; i < 8; i++) {
     int value = analogRead(directPins[i]);
-    Serial.print(value); 
-    //Serial.print(value > lineSensorThreshold[16 + i] ? "White" : "Green"); 
+    Serial.print(value); ; 
     Serial.print(" ");
     }
     delay(50);

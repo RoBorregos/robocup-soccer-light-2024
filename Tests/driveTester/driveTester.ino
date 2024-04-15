@@ -57,8 +57,8 @@ void loop() {
 /*pins for motors: 
 
 M1: 4      M2: 5     M3: 6
-in1= 23    in1= 24   in1= 26
-in2 = 22   in2 = 25  in2 = 27
+in1= 23    in1= 24   in1= 27
+in2 = 22   in2 = 25  in2 = 26
 
 
 */  

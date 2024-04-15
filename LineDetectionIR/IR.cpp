@@ -10,13 +10,13 @@ IR::IR(){
 
 void IR::initiate(unsigned long* current_time) {
     this -> current_time = current_time; 
-    Serial3.begin(115200); 
-    Serial3.setTimeout(100); 
+    Serial1.begin(115200); 
+    Serial1.setTimeout(100); 
 }
 
 void IR::updateData(){
-    if (Serial3.available()) {
-    String input = Serial3.readStringUntil('\n');
+    if (Serial1.available()) {
+    String input = Serial1.readStringUntil('\n');
 
     if (input[0] == 'a') {
       angle = input.substring(2, input.length()).toDouble();

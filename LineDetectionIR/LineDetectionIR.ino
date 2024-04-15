@@ -8,9 +8,9 @@ curved approach*/
 #include "IR.h"
 #include "Color.h"
 
-Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 26, 27); 
+Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26); 
 BNO orientation_sensor;  
-PID pid(0.9, 0, 0.09);   
+PID pid(3.9, 0, 0.09);   
 IR ringIR; 
 Color colorSensor;
 int speed_tester = 120;   
@@ -21,7 +21,7 @@ double ballAngle = 0;
 
 void setup (){ 
     Serial.begin(9600);  
-    Serial3.begin(115200);
+    Serial1.begin(115200);
     unsigned long currentTime = millis();
     //BNO
     orientation_sensor.initialize(); 

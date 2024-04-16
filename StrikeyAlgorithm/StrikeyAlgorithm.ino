@@ -31,9 +31,8 @@ Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26);
 BNO orientation_sensor;  
 PID pid(3.9, 0.4, 0.09);   
 IR ring_IR; 
-Color color_sensor;  
-//Goals yellowGoal;  
-Goals blueGoal; 
+Color color_sensor;    
+Goals goals; 
 unsigned long current_time = 0;  
 
 enum States {
@@ -41,17 +40,16 @@ enum States {
     lineDetected, 
     hasBall, 
     noBall,
-    //searchGoal, 
+    searchGoal, 
     searchBall
 } state; 
 
+enum GoalColor {
+    Blue, 
+    Yellow
+};  
 
-/*enum Sides { 
-    yellow = 0;  // why do they have values? 
-    blue = 1; 
-};
-
-Sides attack = yellow; */
+const GoalColor attack = Yellow;
 
 void setup() { 
     Serial.begin(9600);  
@@ -71,7 +69,8 @@ void loop() {
     int angleLine = color_sensor.getDirection();
     ring_IR.updateData();  
     double ballDistance = ring_IR.getStrength();  
-    double ballAngle = ring_IR.getAngle();  
+    double ballAngle = ring_IR.getAngle();   
+    goals.updateData(); 
 
     // Algorithm for TMR 
     state = line; 
@@ -87,67 +86,32 @@ void loop() {
         ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
         ballAngle = 360 - ballAngle;  
         ballAngle = ring_IR.mapAngleWithOffset(ballAngle);  
+        if ((ballAngle >= 355 && ballAngle <= 360) || (ballAngle >= 0 && ballAngle <= 25)) {
+          ballAngle = 0; 
+        } 
         state = (ballDistance != 0) ? searchBall : noBall;  
     }   
 
     if (state == searchBall) {   
-        searchBallWithDistance(); 
+        if (ballDistance > 60 && ballAngle == 0) {
+            state = searchGoal; 
+        } else {
+          searchBallWithDistance();   
+        }
+        /*
+        Serial.print("Search Ball"); 
+        Serial.print(ballDistance); 
+        Serial.print(ballAngle);  */
     }
     
     if (state == noBall) {
       robot_drive.driveOff(); 
+    }
+
+    if (state == searchGoal) {
+        approachGoal();  
+        Serial.print("approach goal");
     }
   
-
-    /*
-    // Initial state 
-    state = line; 
-
-    // Verify if robot is in line  
-    if (state == line) {
-      state = (isInLine()) ? lineDetected : hasBall; 
-    } 
-
-    if (state == lineDetected) {
-        exitLine(); 
-    }
-    
-    
-    ring_IR.updateData();   
-    /*double ballAngle = ring_IR.getAngle();  
-    ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
-    ballAngle = 360 - ballAngle;  
-    ballAngle = ring_IR.mapAngleWithOffset(ballAngle);   
-    
-    if ((ballAngle >= 355 && ballAngle <= 360) || (ballAngle >= 0 && ballAngle <= 25)) {
-      ballAngle = 0; 
-    } 
-    // Check if robot has ball  
-    if (state == hasBall) {  
-        // here the angle of the ball is taken raw, with no modifications 
-        // here the IR sensor from the front sensor is missing, replace for get strength 
-        //state = ((ring_IR.getStrength()) > 60 && ballAngle == 0) ? searchGoal : searchBall;
-        int ballDistance = ring_IR.getStrength();  
-        state = (ballDistance != 0) ? searchBall : noBall;  
-
-    }
-    
-    // Search ball 
-    if (state == searchBall) {   
-        searchBallWithDistance(); 
-    }
-
-    
-    // Go towards goal with ball 
-    if (state == searchGoal) {
-        approachGoal(); 
-    } 
-
-    if (state == noBall) {
-      robot_drive.driveOff(); 
-    } */
-
-    
-
  
 }

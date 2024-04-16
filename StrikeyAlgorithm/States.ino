@@ -1,12 +1,3 @@
-/*bool isInLine() {  
-    color_sensor.calculateDirection(); 
-    int angleLine = color_sensor.getDirection(); 
-    if (angleLine != -1) {
-        return true; 
-    } else {
-        return false; 
-    }
-} */
 
 //function of ball_distcance working 
 void searchBallWithDistance() { 
@@ -58,26 +49,34 @@ void searchBallWithDistance() {
 
 }
 
-/*
+
 void approachGoal() { 
     // update data from goals  
-    //updateGoals();  
-
-    // get x, large, width from goals   
-    //int goalY = (attack == yellow) ? yellowGoal.getX() : blueGoal.getX();
-    
-    // get PID error 
-    int error = calculateError();  
-    // here the robot is centered , check for goal AND line detection, shouldnt be because exit line comes first 
-    if (goalY < 110 &&) {
-        robot_drive.linealMovementError(0, 220, control); 
+    goals.updateData(); 
+    int x;  
+    if (attack == Yellow) {
+        x = goals.getX(1);  
     } else {
-        robot_drive.linealMovementError(180, 180, control);
+        x = goals.getX(0); 
     }
-    // do something if goal its not seen 
-
-    // if its seen, do something for going left, right 
-}  */
+    
+    if (x > 200) {
+        // Goal is to the left 
+        orientation_sensor.readValues(); 
+        int error = pid.calculateError(orientation_sensor.getYaw(), 0); 
+        robot_drive.linealMovementError(300, Constants::speed, error);  
+    } else if (x < 120) {
+        // Goal is to the right 
+        orientation_sensor.readValues(); 
+        int error = pid.calculateError(orientation_sensor.getYaw(), 0); 
+        robot_drive.linealMovementError(60, Constants::speed, error);   
+    } else {
+        // Goal is centered 
+        orientation_sensor.readValues(); 
+        int error = pid.calculateError(orientation_sensor.getYaw(), 0); 
+        robot_drive.linealMovementError(0, Constants::speed, error);  
+    }
+}  
 
 // Calculate PID error
 double calculateError() {
@@ -92,8 +91,7 @@ void initializeObjects() {
     ring_IR.initiate(&current_time); 
     ring_IR.setOffset(0.0); 
     color_sensor.initiate(); 
-    //yellowGoal.initiate(); 
-    blueGoal.initiate(); 
+    goals.initiate(); 
 } 
 
 /*
@@ -126,17 +124,19 @@ int ballDetector() {
 
 
 // Obtain and save camera data, this might have to be change depending on pixy 
-/*void updateGoals(){ 
-    if (Serial2.available()) {
-    String input1 =  Serial2.readStringUntil('\n');
-
-    if (input1[0] == 'a')
-      porteriaAmarilla.actualizar(input1);
-    else if (input1[0] == 'b')
-      porteriaAzul.actualizar(input1);
-  }
- } 
- */
+void updateGoals(){ 
+    if (Serial3.available()) {
+      goals.updateData();  
+      for (uint8_t i = 0; i < goals.getNumGoals(); i++) {
+        int color = goals.getColor(i); 
+        if (color == 1) {
+            Serial.print("blue"); 
+        } else if (color == 2) {
+            Serial.print("yellow");
+        }
+      }
+    } 
+}     
 
 /*
 //function of ball_distance not working

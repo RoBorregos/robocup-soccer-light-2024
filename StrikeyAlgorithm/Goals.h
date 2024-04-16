@@ -22,7 +22,7 @@ class Goals {
     uint16_t getWidth(uint8_t index);
     uint16_t getHeight(uint8_t index); 
     uint8_t getColor(uint8_t index); 
-    uint8_t getNumGoals();  // Added this method
+    uint8_t getNumGoals(); 
 };
 
 #endif

@@ -9,7 +9,8 @@ class PID {
     double control_error;
     double previous_error;
     double previous_time;
-    double sum_error; 
+    double sum_error;  
+    double max_error; 
 
   public:
     PID(double p, double i, double d);

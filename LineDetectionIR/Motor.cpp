@@ -30,7 +30,7 @@ void Motor::motorBackward() {
 void Motor::stop() {
   digitalWrite(pin1_, HIGH);
   digitalWrite(pin2_, HIGH); 
-  digitalWrite(speed_, 0); 
+  analogWrite(speed_, 255); 
 }
 
 // getters
@@ -47,14 +47,13 @@ int Motor::getPin2() {
 }
 
 void Motor::setSpeed(int speed){
-  int absSpeed = abs(speed); 
+  int absSpeed = abs(speed);  
   analogWrite(getMotorSpeed(), absSpeed); 
-  
+
   if (speed <= 0) { 
       motorFrontward();
   } else {
-    motorBackward(); 
+    motorBackward();
   }
-  
 
 }

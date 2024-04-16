@@ -38,19 +38,19 @@ void loop() {
   digitalWrite(motor_1_dir1, LOW);
   digitalWrite(motor_1_dir2, HIGH);
   analogWrite(motor_1_PWM, kSpeed); 
-  delay(2000); 
+  //delay(2000); 
 
   //tests for motor 2
   digitalWrite(motor_2_dir1, LOW);
   digitalWrite(motor_2_dir2, HIGH);
   analogWrite(motor_2_PWM, kSpeed); 
-  delay(2000); 
+  //delay(2000); 
 
   //tests for motor 3
   digitalWrite(motor_3_dir1, LOW);
   digitalWrite(motor_3_dir2, HIGH);
   analogWrite(motor_3_PWM, kSpeed); 
-  delay(2000); 
+  //delay(2000); 
 
 } 
 

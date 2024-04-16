@@ -41,8 +41,6 @@ void Color::calculateDirection () {
   lastDirection = -1; 
 
   for (int i = 0; i < 8; i++) {
-       if(i == 2 || i == 3){}
-    else {
       selectChannel(i);
       int value = analogRead(sig); 
       if (value > thresholdMux[i]) { 
@@ -55,7 +53,6 @@ void Color::calculateDirection () {
         */
       break;
       }
-    }
   }
   
   for (int i = 0; i < 8; i++) {

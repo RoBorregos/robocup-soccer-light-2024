@@ -13,7 +13,7 @@
  
       int thresholdMux[8] = {900, 900, 900, 900, 900, 900, 900, 900};   
       int thresholdDirect[8] = {900, 900, 900, 900, 150, 150, 150, 150}; 
-      int anglesMux[8] = {180, 180, 135, 120, 180, 105, 70, 90};   
+      int anglesMux[8] = {140, 60, 135, 120, 180, 105, 70, 90};   
       int anglesDirect[8] = {240, 240, 180, 180, 0, 0, 0, 0};   
  
       int lastDirection = -1; 

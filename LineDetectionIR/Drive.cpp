@@ -28,7 +28,7 @@ void Drive::linealMovementError(int degree, int speed, int error) {
 
   speedA -= error;
   speedB -= error;
-  speedC -= error; 
+  speedC -= error;
 
   motor_1.setSpeed(speedA); 
   motor_2.setSpeed(speedB); 

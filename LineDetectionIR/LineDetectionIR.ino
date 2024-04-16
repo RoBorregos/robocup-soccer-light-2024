@@ -1,5 +1,6 @@
-/*Movement adjusting based on distance and angle, creating a 
-curved approach*/
+/*Robot follows the ball with circular movement
+but first checks for line, making a valid goal if ball 
+is placed in the center */
 
 #include "Arduino.h"
 #include "BNO.h"
@@ -81,7 +82,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed) 
     double yaw = orientation_sensor.getYaw(); 
     double error = pid.calculateError(yaw, 0);
     // First scenario: ball_distance < 50
-    if (ball_distance > 60) {
+    if (ball_distance > 40) {
         if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
             robot_drive.linealMovementError(0, 240, error);
         } else {
@@ -93,7 +94,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed) 
             robot_drive.linealMovementError(ball_angle, speed, error);
         }
     }
-    else if (ball_distance < 60) {
+    else if (ball_distance < 40) {
         if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
             robot_drive.linealMovementError(0, 240, error);
         } else {

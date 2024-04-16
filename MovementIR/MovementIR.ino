@@ -9,7 +9,7 @@ curved approach*/
 
 Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26); 
 BNO orientation_sensor;  
-PID pid(3.9, 0, 0.09);   
+PID pid(3.9, 0.4, 0.09);   
 IR ringIR;
 int speed_tester = 210;   
 unsigned long previous_time = 0;  
@@ -19,7 +19,7 @@ double ballAngle = 0;
 
 void setup (){ 
     Serial.begin(9600);  
-    Serial3.begin(115200);
+    Serial1.begin(115200);
     unsigned long currentTime = millis();
     orientation_sensor.initialize(); 
     robot_drive.initialize();
@@ -60,6 +60,36 @@ void loop() {
   }  
 }  
 
+//function of ball_distcance working 
+void searchBallWithDistance(double ball_angle, double ball_distance, int speed, double error) {
+    // First scenario: ball_distance < 50
+    if (ball_distance > 50) {
+        if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
+            robot_drive.linealMovementError(0, 220, error);
+        } else {
+            if (ball_angle > 10 && ball_angle <= 175) {
+                ball_angle += 70; // Increase the angle adjustment to 40
+            } else if (ball_angle >= 185 && ball_angle < 355) {
+                ball_angle -= 70; // Decrease the angle adjustment to 40
+            }
+            robot_drive.linealMovementError(ball_angle, speed, error);
+        }
+    }
+    else if (ball_distance < 50) {
+        if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
+            robot_drive.linealMovementError(0, 220, error);
+        } else {
+            if (ball_angle > 10 && ball_angle <= 175) {
+                ball_angle += 25; // Adjust the angle addition to 25
+            } else if (ball_angle >= 185 && ball_angle < 355) {
+                ball_angle -= 25; // Adjust the angle subtraction to 25
+            }
+            robot_drive.linealMovementError(ball_angle, speed, error);
+        }
+    }
+} 
+
+/*
 //function of ball_distance not working
 void searchBall(int ball_angle, int ball_distance, int speed, int error) {
     if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25 )) {
@@ -74,33 +104,4 @@ void searchBall(int ball_angle, int ball_distance, int speed, int error) {
         Serial.print(ball_angle);
         robot_drive.linealMovementError(ball_angle, speed, error);
     }
-}  
-
-//function of ball_distcance working 
-void searchBallWithDistance(double ball_angle, double ball_distance, int speed, double error) {
-    // First scenario: ball_distance < 50
-    if (ball_distance > 60) {
-        if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
-            robot_drive.linealMovementError(0, 220, error);
-        } else {
-            if (ball_angle > 10 && ball_angle <= 175) {
-                ball_angle += 70; // Increase the angle adjustment to 40
-            } else if (ball_angle >= 185 && ball_angle < 355) {
-                ball_angle -= 70; // Decrease the angle adjustment to 40
-            }
-            robot_drive.linealMovementError(ball_angle, speed, error);
-        }
-    }
-    else if (ball_distance < 60) {
-        if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
-            robot_drive.linealMovementError(0, 220, error);
-        } else {
-            if (ball_angle > 10 && ball_angle <= 175) {
-                ball_angle += 25; // Adjust the angle addition to 25
-            } else if (ball_angle >= 185 && ball_angle < 355) {
-                ball_angle -= 25; // Adjust the angle subtraction to 25
-            }
-            robot_drive.linealMovementError(ball_angle, speed, error);
-        }
-    }
-}
+}  */

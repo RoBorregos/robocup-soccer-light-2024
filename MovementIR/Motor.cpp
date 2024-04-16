@@ -47,7 +47,7 @@ int Motor::getPin2() {
 }
 
 void Motor::setSpeed(int speed){
-  int absSpeed = abs(speed); 
+  int absSpeed = abs(speed);  
   analogWrite(getMotorSpeed(), absSpeed); 
 
   if (speed <= 0) { 

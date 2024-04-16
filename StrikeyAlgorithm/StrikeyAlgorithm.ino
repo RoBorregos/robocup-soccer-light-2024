@@ -79,7 +79,8 @@ void loop() {
     } 
 
     if (state == lineDetected) {
-        exitLine(); 
+        exitLine();  
+        Serial.print("Exit line");   
     } 
 
     if (state == hasBall) {  
@@ -96,12 +97,9 @@ void loop() {
         if (ballDistance > 60 && ballAngle == 0) {
             state = searchGoal; 
         } else {
-          searchBallWithDistance();   
+          searchBallWithDistance(); 
+          Serial.print("Search Ball");   
         }
-        /*
-        Serial.print("Search Ball"); 
-        Serial.print(ballDistance); 
-        Serial.print(ballAngle);  */
     }
     
     if (state == noBall) {

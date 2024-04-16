@@ -2,7 +2,8 @@
 
 //Calibration needed before match 
 /*Camera
-Line Detection, determine wich searchBall function will be used
+Line Detection, determine wich searchBall function will be used 
+DISTANCE OF BALL!!
 Bno Orientation
 IR Ring, angle and distance 
 Direction of Motors 
@@ -28,10 +29,10 @@ calibration of values for pixy x, y, width, height
 //Setup of objects 
 Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26); 
 BNO orientation_sensor;  
-PID pid(3.9, 0, 0.9);   
+PID pid(3.9, 0.4, 0.09);   
 IR ring_IR; 
 Color color_sensor;  
-Goals yellowGoal;  
+//Goals yellowGoal;  
 Goals blueGoal; 
 unsigned long current_time = 0;  
 
@@ -39,17 +40,18 @@ enum States {
     line, 
     lineDetected, 
     hasBall, 
-    searchGoal, 
+    noBall,
+    //searchGoal, 
     searchBall
 } state; 
 
 
-enum Sides { 
+/*enum Sides { 
     yellow = 0;  // why do they have values? 
     blue = 1; 
 };
 
-Sides attack = yellow; 
+Sides attack = yellow; */
 
 void setup() { 
     Serial.begin(9600);  
@@ -60,40 +62,74 @@ void setup() {
     initializeObjects();  
     
     //Turn the robot if its facing backwards 
-    robotTurn(); 
+    //robotTurn(); 
 }
 
 void loop() {
-    current_time = millis();   
+    current_time = millis();  
+    color_sensor.calculateDirection();
+    int angleLine = color_sensor.getDirection();
+    ring_IR.updateData();  
+    double ballDistance = ring_IR.getStrength();  
+    double ballAngle = ring_IR.getAngle();  
 
-    // Algorithm for TMR
-   
+    // Algorithm for TMR 
+    state = line; 
+    if (state == line) {
+      state = (angleLine != -1) ? lineDetected : hasBall; 
+    } 
+
+    if (state == lineDetected) {
+        exitLine(); 
+    } 
+
+    if (state == hasBall) {  
+        ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
+        ballAngle = 360 - ballAngle;  
+        ballAngle = ring_IR.mapAngleWithOffset(ballAngle);  
+        state = (ballDistance != 0) ? searchBall : noBall;  
+    }   
+
+    if (state == searchBall) {   
+        searchBallWithDistance(); 
+    }
+    
+    if (state == noBall) {
+      robot_drive.driveOff(); 
+    }
+  
+
+    /*
     // Initial state 
     state = line; 
 
     // Verify if robot is in line  
     if (state == line) {
-        state = (inline()) ? lineDetected : hasBall; 
+      state = (isInLine()) ? lineDetected : hasBall; 
     } 
 
     if (state == lineDetected) {
         exitLine(); 
     }
-
+    
+    
     ring_IR.updateData();   
-    double ballAngle = ring_IR.getAngle();  
+    /*double ballAngle = ring_IR.getAngle();  
     ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
     ballAngle = 360 - ballAngle;  
     ballAngle = ring_IR.mapAngleWithOffset(ballAngle);   
     
     if ((ballAngle >= 355 && ballAngle <= 360) || (ballAngle >= 0 && ballAngle <= 25)) {
       ballAngle = 0; 
-    }
+    } 
     // Check if robot has ball  
     if (state == hasBall) {  
         // here the angle of the ball is taken raw, with no modifications 
         // here the IR sensor from the front sensor is missing, replace for get strength 
-        state = ((ring_IR.getStrength()) > 60 && ballAngle == 0) ? searchGoal : searchBall;
+        //state = ((ring_IR.getStrength()) > 60 && ballAngle == 0) ? searchGoal : searchBall;
+        int ballDistance = ring_IR.getStrength();  
+        state = (ballDistance != 0) ? searchBall : noBall;  
+
     }
     
     // Search ball 
@@ -101,10 +137,17 @@ void loop() {
         searchBallWithDistance(); 
     }
 
+    
     // Go towards goal with ball 
     if (state == searchGoal) {
         approachGoal(); 
     } 
+
+    if (state == noBall) {
+      robot_drive.driveOff(); 
+    } */
+
+    
 
  
 }

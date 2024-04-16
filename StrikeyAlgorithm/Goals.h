@@ -1,9 +1,11 @@
 #ifndef Goals_h
-  #define Goals_h
+  #define Goals_h  
+
+#include <Pixy2UART.h>
 
 class Goals {
   private:
-    Pixy2 pixy;
+    Pixy2UART pixy;
     uint16_t x, y, width, height;
     uint8_t color; 
 

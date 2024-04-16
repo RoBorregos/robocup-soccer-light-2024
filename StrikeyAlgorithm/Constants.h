@@ -1,6 +1,6 @@
 class Constants {
    public:
-       static constexpr int speed = 150;
+       static constexpr int speed = 220;
        static constexpr int minSpeed = 50;
        static constexpr int sensorIR = A4;
        static constexpr double kP = 0.9;

@@ -7,7 +7,7 @@
 
 Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26); 
 BNO orientation_sensor;  
-PID pid(3.9, 0, 0.09);  
+PID pid(3.9, 0.4, 0.09);  
 int angle_tester = 0;  
 int speed_tester = 210; 
 

@@ -22,13 +22,10 @@ void Color::selectChannel(int chnl) {
 
 void Color::muxSensor() { 
   for (int i = 0; i < 8; i++) {
-       if(i == 2 || i == 3){}
-    else {
       selectChannel(i);
       int value = analogRead(sig); 
       Serial.print(value > thresholdMux[i] ? "White" : "Green"); 
       Serial.print(" ");
-    }
   }
 
   for (int i = 0; i < 8; i++) {
@@ -50,6 +47,12 @@ void Color::calculateDirection () {
       int value = analogRead(sig); 
       if (value > thresholdMux[i]) { 
         lastDirection = (anglesMux[i] + 180) % 360;
+        /*
+        Serial.print("Sensor mux: "); 
+        Serial.print(anglesMux[i]); 
+        Serial.print(i); 
+        Serial.println(lastDirection);  
+        */
       break;
       }
     }
@@ -59,6 +62,11 @@ void Color::calculateDirection () {
     int value = analogRead(directPins[i]);
     if (value > thresholdDirect[i]) { 
         lastDirection = (anglesDirect[i] + 180) % 360;
+        /*
+        Serial.print("Sensor direct: "); 
+        Serial.print(i); 
+        Serial.println(lastDirection); 
+        */
       break;
     }
   }

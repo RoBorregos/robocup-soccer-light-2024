@@ -11,10 +11,10 @@
 
       int directPins[8] = {A0, A1, A4, A5, A13, A14, A9, A10}; 
  
-      int thresholdMux[6] = {500, 100, 500, 100, 500, 500};   
-      int thresholdDirect[8] = {700, 700, 700, 40, 200, 250, 250, 210}; 
-      int anglesMux[6] = {165, 180, 150, 105, 75, 90};   
-      int anglesDirect[8] = {285, 240, 180, 180, 0, 0, 0, 0};   
+      int thresholdMux[8] = {900, 900, 900, 900, 900, 900, 900, 900};   
+      int thresholdDirect[8] = {900, 900, 900, 900, 150, 150, 150, 150}; 
+      int anglesMux[8] = {180, 180, 135, 120, 180, 105, 70, 90};   
+      int anglesDirect[8] = {240, 240, 180, 180, 0, 0, 0, 0};   
  
       int lastDirection = -1; 
     

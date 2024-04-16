@@ -48,7 +48,6 @@ int Motor::getPin2() {
 
 void Motor::setSpeed(int speed){
   int absSpeed = abs(speed); 
-  absSpeed = max(absSpeed, 100); 
   analogWrite(getMotorSpeed(), absSpeed); 
   
   if (speed <= 0) { 

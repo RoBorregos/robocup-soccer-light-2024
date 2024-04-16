@@ -14,8 +14,10 @@ BNO orientation_sensor;
 PID pid(3.9, 0.4, 0.09);   
 IR ringIR; 
 Color colorSensor;
-int speed_tester = 220;   
-unsigned long current_time = 0;  
+int speed_tester = 210;   
+
+unsigned long previous_time = 0;  
+int kFrequency = 50; 
 
 double ballDistance = 0; 
 double ballAngle = 0;  
@@ -35,38 +37,45 @@ void setup (){
     colorSensor.initiate();  
 }
 
-void loop() {   
-  current_time = millis();  
-  colorSensor.calculateDirection();
-  int angleLine = colorSensor.getDirection();
+void loop() {    
+  unsigned long time = millis(); 
   ringIR.updateData();  
   ballDistance = ringIR.getStrength();  
-  ballAngle = ringIR.getAngle();  
+  ballAngle = ringIR.getAngle();    
 
-  if (angleLine != -1) {
-    exitLine();  
-  } else {
-    ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
-    ballAngle = 360 - ballAngle;  
-    ballAngle = ringIR.mapAngleWithOffset(ballAngle);  
+  colorSensor.calculateDirection();  
+  int angleLine = colorSensor.getDirection();     
 
-    if (ballDistance != 0) { 
-      //this function will be used depending if the distance given by the IR Ring works well
-      searchBallWithDistance(ballAngle, ballDistance, speed_tester); 
+  if ((time - previous_time) > kFrequency) {
+    if (angleLine != -1) {
+      exitLine();  
     } else {
-      Serial.print("no ball detected"); 
-      robot_drive.driveOff();  
-    }
-  }
-  
-}   
+      ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
+      ballAngle = 360 - ballAngle;  
+      ballAngle = ringIR.mapAngleWithOffset(ballAngle); 
 
+      if (ballDistance != 0) { 
+        //double yaw = orientation_sensor.getYaw();
+        //double control = pid.calculateError(yaw, 0); 
+
+        //this function will be used depending if the distance given by the IR Ring works well
+        searchBallWithDistance(ballAngle, ballDistance, speed_tester); 
+
+      } else {
+        robot_drive.driveOff();  
+      }
+      previous_time = time; 
+    }  
+  }
+}
+
+  
 void exitLine () {
   colorSensor.calculateDirection();  
   int angle_line = colorSensor.getDirection();     
   unsigned long time = millis(); 
 
-  while((millis() - time) < 350) {
+  while((millis() - time) < 300) {
       // in calculate error you already take this value orientation_sensor.readValues();  
       orientation_sensor.readValues();
       double yaw = orientation_sensor.getYaw(); 
@@ -81,8 +90,8 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed) 
     orientation_sensor.readValues(); 
     double yaw = orientation_sensor.getYaw(); 
     double error = pid.calculateError(yaw, 0);
-    // First scenario: ball_distance < 50
-    if (ball_distance > 40) {
+    // First scenario: ball_distance BALL CLOSE
+    if (ball_distance > 50) {
         if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
             robot_drive.linealMovementError(0, 240, error);
         } else {
@@ -93,8 +102,8 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed) 
             }
             robot_drive.linealMovementError(ball_angle, speed, error);
         }
-    }
-    else if (ball_distance < 40) {
+    } // Second Scenario BALL FAR
+    else if (ball_distance < 50) {
         if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
             robot_drive.linealMovementError(0, 240, error);
         } else {
@@ -108,7 +117,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed) 
     }
 }
 
-
+/*
 //function of ball_distance not working
 void searchBall(int ball_angle, int ball_distance, int speed, int error) {
     if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25 )) {
@@ -123,4 +132,4 @@ void searchBall(int ball_angle, int ball_distance, int speed, int error) {
         Serial.print(ball_angle);
         robot_drive.linealMovementError(ball_angle, speed, error);
     }
-}
+} */ 

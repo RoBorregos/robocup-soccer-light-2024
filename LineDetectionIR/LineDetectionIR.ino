@@ -38,11 +38,13 @@ void loop() {
   angleLine = colorSensor.getDirection(); 
 
   if ((time - previous_time) > kFrequency) { 
+    // FIRST STATE: EXIT LINE
     if (angleLine != -1) {
       double yaw = orientation_sensor.getYaw();
       double control = pid.calculateError(yaw, 0);
       exitLine(angleLine, control); 
-    } else {
+
+    } else { // SECOND STATE: SEARCH BALL 
       orientation_sensor.readValues();  
     
       ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
@@ -56,6 +58,7 @@ void loop() {
         double yaw = orientation_sensor.getYaw();
         double control = pid.calculateError(yaw, 0);  
         //this function will be used depending if the distance given by the IR Ring works well
+        // THIRD STATE: APPROACH GOAL
         searchBallWithDistance(ballAngle, ballDistance, speed_tester, control); 
 
       } else {

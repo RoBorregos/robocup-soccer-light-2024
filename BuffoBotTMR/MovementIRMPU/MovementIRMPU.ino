@@ -7,34 +7,19 @@ curved approach*/
 #include "Drive.h" 
 #include "PID.h" 
 #include "IR.h" 
+#include "BNO.h" 
 
-#include <Simple_MPU6050.h>
-#include <Wire.h>
 
 Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26); 
 PID pid(0.9, 0, 0.09);   
 IR ringIR;
+BNO orientation_sensor; 
 int speed_tester = 120;   
 unsigned long previous_time = 0;  
 int kFrequency = 50; 
 double ballDistance = 0; 
 double ballAngle = 0;  
 
-
-Simple_MPU6050 mpu;
-double offset = 0;
-
-int yaw = 0.0; 
-
-const int numSamples = 10; 
-int samples[numSamples]; 
-int sampleIndex = 0; 
-
-const float b0 = 0.000395;
-const float b1 = 0.000791;
-const float b2 = 0.000395;
-const float a1 = -1.972186;
-const float a2 = 0.972613;
 
 void setup (){ 
     Serial.begin(9600);  
@@ -43,13 +28,7 @@ void setup (){
     robot_drive.initialize();
     ringIR.initiate(&currentTime);
     ringIR.setOffset(0.0);  
-
-    Wire.begin();
-    mpu.begin();
-    mpu.Set_DMP_Output_Rate_Hz(10);
-    mpu.CalibrateMPU();
-    mpu.load_DMP_Image();
-    mpu.on_FIFO(gyroValues);
+    orientation_sensor.initialize(); 
 }
 
 void loop() {   
@@ -58,7 +37,6 @@ void loop() {
   ballDistance = ringIR.getStrength();  
   ballAngle = ringIR.getAngle(); 
   if ((time - previous_time) > kFrequency) {
-    actualizeMPU(); 
     
     ballAngle = (ballAngle < 0 ? 360 + ballAngle : ballAngle);   
     ballAngle = 360 - ballAngle;  
@@ -68,9 +46,10 @@ void loop() {
     Serial.println(ballDistance);   
 
     if (ballDistance != 0) { 
+      orientation_sensor.readValues();
       
-      Serial.print("yaw: ");  
-      //double yaw = orientation_sensor.getYaw();
+      //Serial.print("yaw: ");  
+      double yaw = orientation_sensor.getYaw();
       //Serial.print(yaw); 
 
       double control = pid.calculateError(yaw, 0);  

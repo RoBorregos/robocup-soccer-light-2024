@@ -8,7 +8,7 @@
 #include <Wire.h>
 
 Drive robot_drive(4, 23, 22, 5, 25, 24, 6, 27, 26);   
-PID pid(0.9, 0, 0.09);   
+PID pid(1.2, 0, 0.09);   
 IR ringIR; 
 Color colorSensor;
 
@@ -99,7 +99,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed, 
     // First scenario: ball_distance < 50
     if (ball_distance > 60) {
         if ((ball_angle >= 335 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 5)) {
-            robot_drive.linealMovementError(0, 150, error);
+            robot_drive.linealMovementError(0, 120, error);
         } else {
             if (ball_angle > 5 && ball_angle <= 175) {
                 ball_angle += 70; // Increase the angle adjustment to 40
@@ -111,7 +111,7 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed, 
     }
     else if (ball_distance < 60) {
         if ((ball_angle >= 335 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 5)) {
-            robot_drive.linealMovementError(0, 150, error);
+            robot_drive.linealMovementError(0, 120, error);
         } else {
             if (ball_angle > 5 && ball_angle <= 175) {
                 ball_angle += 25; // Adjust the angle addition to 25
@@ -130,10 +130,10 @@ void exitLine (int angleLine, double error) {
     int newAngleLine = colorSensor.getDirection();
 
     // Check for new line detection within the while loop
-    if (newAngleLine != -1) {
+    /*if (newAngleLine != -1) {
        angleLine = newAngleLine;
-    }
-    robot_drive.linealMovementError(angleLine, 150, error);
+    }*/
+    robot_drive.linealMovementError(angleLine, 100, error);
   }
 } 
 

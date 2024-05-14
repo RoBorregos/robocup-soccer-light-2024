@@ -10,7 +10,7 @@ PID pid(3.9, 0.4, 0.09);
 IR ringIR; 
 Color colorSensor;
 
-int speed_tester = 210;   
+int speed_tester = 230;   
 unsigned long previous_time = 0;
 int lastPosition = 0; 
 int kFrequency = 10; 
@@ -75,8 +75,8 @@ void loop() {
 void searchBallWithDistance(double ball_angle, double ball_distance, int speed, double error) {
     // First scenario: ball_distance < 50
     if (ball_distance > 50) {
-        if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
-            robot_drive.linealMovementError(0, 220, error);
+        if ((ball_angle >= 350 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
+            robot_drive.linealMovementError(0, 240, error);
         } else {
             if (ball_angle > 10 && ball_angle <= 175) {
                 ball_angle += 70; // Increase the angle adjustment to 40
@@ -87,8 +87,8 @@ void searchBallWithDistance(double ball_angle, double ball_distance, int speed, 
         }
     }
     else if (ball_distance < 50) {
-        if ((ball_angle >= 355 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
-            robot_drive.linealMovementError(0, 220, error);
+        if ((ball_angle >= 350 && ball_angle <= 360) || (ball_angle >= 0 && ball_angle <= 25)) {
+            robot_drive.linealMovementError(0, 240, error);
         } else {
             if (ball_angle > 10 && ball_angle <= 175) {
                 ball_angle += 25; // Adjust the angle addition to 25
@@ -110,7 +110,7 @@ void exitLine (int angleLine, double error) {
     if (newAngleLine != -1) {
        angleLine = newAngleLine;
     }
-    robot_drive.linealMovementError(angleLine, 255, error);
+    robot_drive.linealMovementError(angleLine, 200, error);
   }
 } 
 

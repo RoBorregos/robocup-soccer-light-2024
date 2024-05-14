@@ -22,7 +22,7 @@ double PID::calculateError(int angle, int set_point) {
     previous_error = control_error;
     previous_time = time;
 
-    Serial.print("Error: ");
+    Serial.print(" Error: ");
     Serial.println(control); 
     //control = min(35, control); 
 

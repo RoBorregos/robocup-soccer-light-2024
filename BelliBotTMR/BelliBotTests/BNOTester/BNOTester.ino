@@ -16,7 +16,7 @@ void setup() {
     Serial.print("No BNO055 detected");
     while (1); 
   }
-  delay(1000);
+  delay(100);
 
   // use external crystal for better accuracy
   bno.setExtCrystalUse(true);

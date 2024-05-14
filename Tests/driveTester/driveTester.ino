@@ -14,7 +14,7 @@ const int motor_3_dir1 = 27;
 const int motor_3_dir2 = 26;  
 
 // speed for testing and angle
-const int kSpeed = 80;
+const int kSpeed = 150;
 
 void setup() {
   Serial.begin(9600);
@@ -35,20 +35,20 @@ void setup() {
 
 void loop() {
   //tests for motor 1
-  digitalWrite(motor_1_dir1, LOW);
-  digitalWrite(motor_1_dir2, HIGH);
+  digitalWrite(motor_1_dir1, HIGH);
+  digitalWrite(motor_1_dir2, LOW);
   analogWrite(motor_1_PWM, kSpeed); 
   //delay(2000); 
 
   //tests for motor 2
   digitalWrite(motor_2_dir1, LOW);
-  digitalWrite(motor_2_dir2, HIGH);
+  digitalWrite(motor_2_dir2, LOW);
   analogWrite(motor_2_PWM, kSpeed); 
   //delay(2000); 
 
   //tests for motor 3
-  digitalWrite(motor_3_dir1, LOW);
-  digitalWrite(motor_3_dir2, HIGH);
+  digitalWrite(motor_3_dir1, HIGH);
+  digitalWrite(motor_3_dir2, LOW);
   analogWrite(motor_3_PWM, kSpeed); 
   //delay(2000); 
 

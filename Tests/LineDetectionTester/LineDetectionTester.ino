@@ -1,4 +1,34 @@
-// PINS SENSORS 
+// BuffoBot
+
+// Direct Pins (analogs) 
+int directPins[12] = {A6, A7, A11, A12, A0, A1, A4, A5, A13, A14, A9, A10};
+
+
+void setup() {
+  Serial.begin(9600);
+  for (int i = 0; i < 12; i++) {
+      pinMode(directPins[i], INPUT);
+  } 
+}
+
+void loop() {
+  readSensors(); 
+} 
+
+
+void readSensors() { 
+
+  // Read from direct sensors
+  for (int i = 0; i < 12; i++) {
+    int value = analogRead(directPins[i]);
+    Serial.print(value); ; 
+    Serial.print(" ");
+    }
+    delay(50);
+    Serial.println(); 
+} 
+
+/*// BelliBot 
 
 // Left Pins (mux) 
 const int s0 = 36; 
@@ -55,4 +85,4 @@ void readSensors() {
     }
     delay(50);
     Serial.println(); 
-} 
+} */

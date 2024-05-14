@@ -18,14 +18,17 @@ double PID::calculateError(int angle, int set_point) {
     // calculate the control signal using PID
     double control = (kP * control_error) + (kI * sum_error) + (kD * delta_error);
 
+    // check and adjust control to be at least 35 or at most -35
+  
+    control = min(40, control);
+    control = max(-40, control);
+
     // update previous error and time
     previous_error = control_error;
-    previous_time = time;
+    previous_time = time;  
 
-    Serial.print("Error: ");
+    Serial.print(" Error: ");
     Serial.println(control); 
-    //control = min(100, control); 
 
     return control;
 }
-
